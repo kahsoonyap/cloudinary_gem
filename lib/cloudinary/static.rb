@@ -18,7 +18,7 @@ class Cloudinary::Static
       metadata = build_metadata
       metadata_lines = []
       counts = { :not_changed => 0, :uploaded => 0, :deleted => 0, :not_found => 0}
-      discover_all do |path, public_path|
+      discover_all do |path, public_path, folders, file_name|
         next if found_paths.include?(path)
         if found_public_paths[public_path]
           print "Warning: duplicate #{public_path} in #{path} - already taken from #{found_public_paths[public_path]}\n"
@@ -143,8 +143,10 @@ class Cloudinary::Static
           else
             relative_path = path.relative_path_from(root)
             public_path = path.relative_path_from(dir.dirname)
+            file_name = path.slice! dir
+            folders = dir.slice! root
             debugger
-            yield(relative_path, public_path)
+            yield(relative_path, public_path, folders, file_name)
           end
         end
       end
