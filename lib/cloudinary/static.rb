@@ -143,6 +143,7 @@ class Cloudinary::Static
           else
             relative_path = path.relative_path_from(root)
             public_path = path.relative_path_from(dir.dirname)
+            debugger
             yield(relative_path, public_path)
           end
         end
