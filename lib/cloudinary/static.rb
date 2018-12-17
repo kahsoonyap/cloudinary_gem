@@ -40,8 +40,8 @@ class Cloudinary::Static
         else
           counts[:uploaded] += 1
           print "#{public_path} - #{public_id} - Uploading\n"
-          result = Cloudinary::Uploader.upload(Cloudinary::Blob.new(data, :original_filename=>path.to_s),
-            options.merge(:format=>format, :public_id=>public_id, :type=>:asset, :resource_type=>resource_type(path.to_s))
+          result = Cloudinary::Uploader.upload(Cloudinary::Blob.new(data, :original_filename=>file_name),
+            options.merge(:use_filename=>true, :folder=>folders,:format=>format, :type=>:asset, :resource_type=>resource_type(path.to_s))
           ).merge("upload_time"=>Time.now)
         end
         metadata_lines << [public_path, public_id, result["upload_time"].to_i, result["version"], result["width"], result["height"]].join("\t")+"\n"
@@ -143,9 +143,8 @@ class Cloudinary::Static
           else
             relative_path = path.relative_path_from(root)
             public_path = path.relative_path_from(dir.dirname)
-            file_name = path.slice! dir
-            folders = dir.slice! root
-            debugger
+            file_name = path.to_s.slice! dir.to_s
+            folders = dir.to_s.slice! root.to_s
             yield(relative_path, public_path, folders, file_name)
           end
         end
