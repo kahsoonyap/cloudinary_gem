@@ -39,16 +39,9 @@ class Cloudinary::Static
           result = item_metadata
         else
           counts[:uploaded] += 1
-          print path.to_s 
-          print "\n"
-          print public_path.to_s
-          print "\n"
-          print folders
-          print "\n"
-          print file_name
-          print "\n"
           print "#{public_path} - #{public_id} - Uploading\n"
-          result = Cloudinary::Uploader.upload(file_name, :upload_preset => 'rake', :folder => folders).merge('upload_time'=>Time.now)
+          result = Cloudinary::Uploader.upload(file_name, :use_filename => true, :unique_filename => false,
+           :folder => folders).merge('upload_time'=>Time.now)
         end
         metadata_lines << [public_path, public_id, result["upload_time"].to_i, result["version"], result["width"], result["height"]].join("\t")+"\n"
       end
@@ -149,15 +142,8 @@ class Cloudinary::Static
           else
             relative_path = path.relative_path_from(root)
             public_path = path.relative_path_from(dir.dirname)
-            file_name = path.to_s.slice! dir.to_s
-            folders = dir.to_s.slice! root.to_s
-            print path 
-            print "\n" 
-            print relative_path
-            print "\n" 
-            print public_path
-            print "\n"
-            print dir 
+            file_name = path.to_s.remove(dir.to_s)
+            folders = dir.to_s.remove(root.to_s)
             debugger
             yield(relative_path, public_path, folders, file_name)
           end
