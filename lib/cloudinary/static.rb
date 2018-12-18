@@ -40,7 +40,7 @@ class Cloudinary::Static
         else
           counts[:uploaded] += 1
           print "#{public_path} - #{public_id} - Uploading\n"
-          result = Cloudinary::Uploader.upload(file_name, :use_filename => true, :unique_filename => false,
+          result = Cloudinary::Uploader.upload(path, :use_filename => true, :unique_filename => false,
            :folder => folders).merge('upload_time'=>Time.now)
         end
         metadata_lines << [public_path, public_id, result["upload_time"].to_i, result["version"], result["width"], result["height"]].join("\t")+"\n"
