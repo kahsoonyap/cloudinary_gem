@@ -39,11 +39,6 @@ class Cloudinary::Static
           result = item_metadata
         else
           counts[:uploaded] += 1
-          print "path: #{path}\n"
-          print "public_path: #{public_path}\n"
-          print "folders: #{folders}\n"
-          print "file_name: #{file_name}\n"
-          print "#{public_path} - #{public_id} - Uploading\n"
           result = Cloudinary::Uploader.upload(path, :use_filename => true, :unique_filename => false,
            :folder => folders).merge('upload_time'=>Time.now)
         end
@@ -146,9 +141,8 @@ class Cloudinary::Static
           else
             relative_path = path.relative_path_from(root)
             public_path = path.relative_path_from(dir.dirname)
-            file_name = path.to_s.remove(dir.to_s)[1..-1]
-            folders = dir.to_s.remove(root.to_s) + '/'
-            debugger
+            file_name = path.basename.to_s
+            folders = path.dirname.to_s
             yield(relative_path, public_path, folders, file_name)
           end
         end
