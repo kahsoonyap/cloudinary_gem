@@ -148,7 +148,7 @@ class Cloudinary::Static
             public_path = path.relative_path_from(dir.dirname)
             file_name = path.to_s.remove(dir.to_s)[1..-1]
             folders = dir.to_s.remove(root.to_s) + '/'
-            if file_name.contains('/')
+            if file_name.include? '/'
               debugger
             yield(relative_path, public_path, folders, file_name)
           end
