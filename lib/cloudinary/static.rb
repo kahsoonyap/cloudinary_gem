@@ -149,9 +149,16 @@ class Cloudinary::Static
           else
             relative_path = path.relative_path_from(root)
             public_path = path.relative_path_from(dir.dirname)
-            debugger
             file_name = path.to_s.slice! dir.to_s
             folders = dir.to_s.slice! root.to_s
+            print path 
+            print "\n" 
+            print relative_path
+            print "\n" 
+            print public_path
+            print "\n"
+            print dir 
+            debugger
             yield(relative_path, public_path, folders, file_name)
           end
         end
