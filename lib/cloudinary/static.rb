@@ -144,7 +144,6 @@ class Cloudinary::Static
             public_path = path.relative_path_from(dir.dirname)
             file_name = path.basename.to_s
             folders = relative_path.dirname.to_s
-            debugger
             yield(relative_path, public_path, folders, file_name)
           end
         end
