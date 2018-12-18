@@ -40,13 +40,13 @@ class Cloudinary::Static
         else
           counts[:uploaded] += 1
           print path.to_s 
-          print '\n'
+          print "\n"
           print public_path.to_s
-          print '\n'
+          print "\n"
           print folders
-          print '\n'
+          print "\n"
           print file_name
-          print '\n'
+          print "\n"
           print "#{public_path} - #{public_id} - Uploading\n"
           result = Cloudinary::Uploader.upload(file_name, :upload_preset => 'rake', :folder => folders).merge('upload_time'=>Time.now)
         end
